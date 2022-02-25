@@ -1,0 +1,69 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+on:
+  push:
+    branches:
+      - '**'        # matches every branch
+      - '!master'   # excludes master
+  pull_request:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+
+          - python-version: 2.7
+            toxenv: "py27-marshmallow-codecov"
+
+          - python-version: 2.7
+            toxenv: "py27-schematics-codecov"
+
+          - python-version: 3.5
+            toxenv: "py35-marshmallow-codecov"
+
+          - python-version: 3.5
+            toxenv: "py35-schematics-codecov"
+
+          - python-version: 3.6
+            toxenv: "py36-marshmallow-codecov"
+
+          - python-version: 3.6
+            toxenv: "py36-schematics-codecov"
+
+          - python-version: 3.7
+            toxenv: "py37-marshmallow-codecov"
+
+          - python-version: 3.7
+            toxenv: "py37-schematics-codecov"
+
+          - python-version: 3.8
+            toxenv: "py38-marshmallow-codecov"
+
+          - python-version: 3.8
+            toxenv: "py38-schematics-codecov"
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+
+      - name: Install tox
+        run: pip install tox
+
+      - name: Run tox
+        env:
+          TOXENV: ${{ matrix.toxenv }}
+        run: tox
