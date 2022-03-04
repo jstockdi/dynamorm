@@ -1,6 +1,7 @@
 0.12.0 - 2020.08.24
 ###################
 * Added support for Github Actions
+* Correct IN usage in docstring
 
 0.11.0 - 2020.08.24
 ###################
