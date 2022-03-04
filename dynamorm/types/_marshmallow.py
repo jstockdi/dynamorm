@@ -22,7 +22,6 @@ if parse_version(marshmallow_version) >= parse_version("3.0.0a1"):
             raise ValidationError(obj, cls.__name__, e)
         return data
 
-
 else:
 
     def _validate(cls, obj, partial=False, native=False):
